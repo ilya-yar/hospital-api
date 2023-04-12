@@ -1,0 +1,41 @@
+# версия docker-compose
+version: '3.2'
+
+# Общая сеть default для всех контейнеров
+networks:
+  default:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - default
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: ../app
+        target: /var/www/app/
+      - type: bind
+        source: ./conf/nginx
+        target: /etc/nginx/sites-available
+
+  db:
+    image: mysql:5.7
+    networks:
+      - default
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+    volumes:
+      - /var/lib/mysql
+      - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
