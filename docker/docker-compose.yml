@@ -37,5 +37,7 @@ services:
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "admin"
     volumes:
-      - /var/lib/mysql
       - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+      - type: bind
+        source: ./database
+        target: /var/lib/mysql
