@@ -92,6 +92,27 @@ class Patient extends \yii\db\ActiveRecord
     }
 
     /**
+     * Fields for API.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+            'name',
+            'birthday',
+            'phone',
+            'polyclinic',
+            'status',
+            'treatment',
+            'formDisease',
+            'updated',
+            'diagnosis_date',
+            'recovery_date',
+        ];
+    }
+
+    /**
      * Gets query for [[FormDisease]].
      *
      * @return \yii\db\ActiveQuery

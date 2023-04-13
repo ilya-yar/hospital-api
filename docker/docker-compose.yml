@@ -39,5 +39,5 @@ services:
     volumes:
       - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
       - type: bind
-        source: ./database
+        source: ../database
         target: /var/lib/mysql
