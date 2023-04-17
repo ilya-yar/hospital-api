@@ -64,7 +64,8 @@ class Patient extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->polyclinic_id = $this->polyclinic_id ?: 2;
+            $user = User::findOne(Yii::$app->user->id);
+            $this->polyclinic_id = $user->polyclinic_id;
         }
         return parent::beforeSave($insert);
     }
@@ -76,7 +77,8 @@ class Patient extends \yii\db\ActiveRecord
     {
         return [
             [['birthday', 'created', 'updated', 'diagnosis_date', 'recovery_date', 'analysis_date'], 'safe'],
-            [['polyclinic_id', 'treatment_id', 'status_id', 'form_disease_id', 'created_by', 'updated_by', 'source_id'], 'integer'],
+            [['birthday', 'diagnosis_date', 'recovery_date', 'analysis_date', 'status_id', 'form_disease_id', 'treatment_id',], 'default', 'value' => null],
+            [['treatment_id', 'status_id', 'form_disease_id', 'created_by', 'updated_by', 'source_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
             [['address'], 'string', 'max' => 512],
@@ -91,6 +93,12 @@ class Patient extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Конвертация дат в формат БД.
+     *
+     * @param $attribute
+     * @return void
+     */
     public function convertDate($attribute)
     {
         $this->$attribute = $this->$attribute ? date('Y-m-d', strtotime($this->$attribute)) : null;

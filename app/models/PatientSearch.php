@@ -24,11 +24,6 @@ class PatientSearch  extends Patient
 
 		$query->with(["status", "polyclinic", "treatment", "formDisease", "updatedBy"]);
 
-		/*if ( !Yii::$app->user->isSuperadmin )
-		{
-			$query->where(['superadmin'=>0]);
-		}*/
-
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'pagination' => [
@@ -40,9 +35,6 @@ class PatientSearch  extends Patient
 				],
 			],
 		]);
-
-
-        //echo $query->createCommand()->getRawSql(); exit;
 
 		if (!($this->load($params, '') && $this->validate())) {
 			return $dataProvider;

@@ -6,10 +6,7 @@ use Yii;
 use app\models\Patient;
 use app\models\User;
 use app\models\PatientSearch;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use app\models\Polyclinics;
 use app\models\Statuses;
 use app\models\Treatments;
@@ -27,10 +24,6 @@ class PatientssController extends BaseController
      */
     public function actionIndex()
     {
-       /* $dataProvider = new ActiveDataProvider([
-            'query' => Patient::find()->with(["status", "polyclinic", "treatment", "formDisease", "updatedBy"])
-        ]);*/
-
         $params = Yii::$app->request->get('PatientSearch');
         $searchModel = new PatientSearch;
         $dataProvider = $searchModel->search($params);
@@ -53,7 +46,7 @@ class PatientssController extends BaseController
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id)
     {
         $model = Patient::find()->where(["id"=>$id])->with(["status", "polyclinic", "treatment", "formDisease", "updatedBy", "createdBy", "source", "patients"])->one();
 

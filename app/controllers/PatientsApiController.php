@@ -5,8 +5,8 @@ namespace app\controllers;
 use app\models\PatientSearch;
 use Yii;
 use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBearerAuth;
 use app\rest\CreateModelAction;
+use \app\filters\auth\HttpBearerUserAuth;
 use yii\rest\IndexAction;
 use yii\rest\ActiveController;
 use app\models\Patient;
@@ -23,23 +23,25 @@ class PatientsApiController extends ActiveController
 
     public function behaviors(): array
     {
-        // Если запрос совершён из браузера залогиненного пользователя (т.е. имеется авторизационная кука)
-        if (Yii::$app->request->cookies->has(Yii::$app->user->identityCookie['name'])) {
+        // Auth by cookie if passed in request
+        if (Yii::$app->request->cookies->get(Yii::$app->user->identityCookie['name']) !== null) {
             $authMethods = [];
         } else {
-            // Запрос от сторонних сервисов - авторизация по Bearer токену
-            $authMethods = [HttpBearerAuth::class];
+            // Auth by token
+            $authMethods = [HttpBearerUserAuth::class];
         }
 
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => $authMethods,
+        $behaviors = [
+            'authenticator' => [
+                'class' => CompositeAuth::class,
+                'authMethods' => $authMethods,
+            ],
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ]
         ];
-        $behaviors['ghost-access'] = [
-            'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        ];
-        return $behaviors;
+
+        return array_merge(parent::behaviors(), $behaviors);
     }
 
     public function actions(): array

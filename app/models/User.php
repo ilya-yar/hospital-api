@@ -5,7 +5,6 @@ namespace app\models;
 use webvimark\helpers\LittleBigHelper;
 use webvimark\helpers\Singleton;
 use webvimark\modules\UserManagement\components\AuthHelper;
-use webvimark\modules\UserManagement\components\UserIdentity;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\UserManagementModule;
@@ -16,6 +15,7 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "user".
  *
  * @property integer $id
+ * @property integer $polyclinic_id
  * @property string $username
  * @property string $email
  * @property integer $email_confirmed
