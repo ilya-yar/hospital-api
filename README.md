@@ -11,4 +11,10 @@
 7. Запустить оккружение: docker-compose -f ../docker/docker-compose.yml up -d
 8. Развернуть дамп БД: cat db.sql | docker exec -i docker_db_1 /usr/bin/mysql -u admin --password=admin test_db
 
-Развернуть дамп БД: cat db.sql | docker exec -i docker_db_1 /usr/bin/mysql -u admin --password=admin test_db
+## Работа с API:
+
+Запрос к списку пациентов чере CURL:
+curl http://localhost/patients-api -G --data 'name=test&polyclinic_id=2&birthday=1996-01-01' --header 'Authorization: Bearer YpBGl_EWteH_sAUPHVWTpbgdJDE7mrXy'
+
+Запрос на создание нового пациента через CURL:
+curl -X POST -d 'name=test & birthday=1996-01-01 & polyclinic_id=2 & phone=89109698891' http://localhost/patients-api/create  --header 'Authorization: Bearer YpBGl_EWteH_sAUPHVWTpbgdJDE7mrXy'

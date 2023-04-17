@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `webvimark\modules\UserManagement\models\User`.
@@ -43,12 +42,11 @@ class PatientSearch  extends Patient
 		]);
 
 
+        //echo $query->createCommand()->getRawSql(); exit;
 
-		if (!($this->load($params) && $this->validate())) {
+		if (!($this->load($params, '') && $this->validate())) {
 			return $dataProvider;
 		}
-
-
 
 		$query->andFilterWhere([
 			'polyclinic_id' => $this->polyclinic_id,

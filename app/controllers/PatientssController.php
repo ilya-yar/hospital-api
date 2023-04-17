@@ -31,7 +31,7 @@ class PatientssController extends BaseController
             'query' => Patient::find()->with(["status", "polyclinic", "treatment", "formDisease", "updatedBy"])
         ]);*/
 
-        $params = Yii::$app->request->get();
+        $params = Yii::$app->request->get('PatientSearch');
         $searchModel = new PatientSearch;
         $dataProvider = $searchModel->search($params);
 

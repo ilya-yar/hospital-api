@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "patients".
@@ -44,10 +46,33 @@ class Patient extends \yii\db\ActiveRecord
         return 'patients';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created',
+                'updatedAtAttribute' => 'updated',
+                'value' => date('Y-m-d H:i:s'),
+            ],
+            'blameableBehavior' => [
+                'class' => BlameableBehavior::class,
+            ]
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->polyclinic_id = $this->polyclinic_id ?: 2;
+        }
+        return parent::beforeSave($insert);
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['birthday', 'created', 'updated', 'diagnosis_date', 'recovery_date', 'analysis_date'], 'safe'],
@@ -55,6 +80,7 @@ class Patient extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
             [['address'], 'string', 'max' => 512],
+            [['birthday', 'diagnosis_date', 'recovery_date', 'analysis_date'], 'convertDate'],
             [['form_disease_id'], 'exist', 'skipOnError' => true, 'targetClass' => FormDiseases::className(), 'targetAttribute' => ['form_disease_id' => 'id']],
             [['source_id'], 'exist', 'skipOnError' => true, 'targetClass' => Patient::className(), 'targetAttribute' => ['source_id' => 'id']],
             [['polyclinic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Polyclinics::className(), 'targetAttribute' => ['polyclinic_id' => 'id']],
@@ -63,6 +89,11 @@ class Patient extends \yii\db\ActiveRecord
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
+    }
+
+    public function convertDate($attribute)
+    {
+        $this->$attribute = $this->$attribute ? date('Y-m-d', strtotime($this->$attribute)) : null;
     }
 
     /**

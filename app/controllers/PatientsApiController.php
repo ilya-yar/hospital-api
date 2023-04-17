@@ -2,27 +2,24 @@
 
 namespace app\controllers;
 
-use app\components\ActiveRecordSerializer;
 use app\models\PatientSearch;
 use Yii;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
-use yii\rest\CreateAction;
+use app\rest\CreateModelAction;
 use yii\rest\IndexAction;
 use yii\rest\ActiveController;
 use app\models\Patient;
+use yii\rest\Serializer;
 
 class PatientsApiController extends ActiveController
 {
     public $modelClass = Patient::class;
 
-    public function beforeAction($action)
-    {
-        if ($action->id === 'create') {
-            $this->serializer = ActiveRecordSerializer::class;
-        }
-        return parent::beforeAction($action);
-    }
+    public $serializer = [
+        'class' => Serializer::class,
+        'collectionEnvelope' => 'items',
+    ];
 
     public function behaviors(): array
     {
@@ -57,7 +54,8 @@ class PatientsApiController extends ActiveController
                 },
             ],
             'create' => [
-                'class' => CreateAction::class,
+                // Custom create action to return saving status
+                'class' => CreateModelAction::class,
                 'modelClass' => $this->modelClass,
             ],
         ];
