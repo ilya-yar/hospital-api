@@ -18,7 +18,7 @@ class PatientsApiController extends ActiveController
 
     public $serializer = [
         'class' => Serializer::class,
-        'collectionEnvelope' => 'items',
+        'collectionEnvelope' => 'patients',
     ];
 
     public function behaviors(): array
