@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "da9c9ba0-d5ef-4b6a-9f84-1ccbed1eee01",
+		"name": "Foquz test task API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16121644"
+	},
+	"item": [
+		{
+			"name": "Patients list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer qyftGvqeDsWenw2pVFzOlm_7u1OhdwpZ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/patients-api?phone=89109698891&birthday=1996-01-01&polyclinic_id=2&name=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"patients-api"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "89109698891"
+						},
+						{
+							"key": "birthday",
+							"value": "1996-01-01"
+						},
+						{
+							"key": "polyclinic_id",
+							"value": "2"
+						},
+						{
+							"key": "name",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer qyftGvqeDsWenw2pVFzOlm_7u1OhdwpZ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test1",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "89106667243",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "89106667243",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Маяковского, 122-222",
+							"type": "text"
+						},
+						{
+							"key": "polyclinic_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "treatment_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "status_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "form_disease_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "created",
+							"value": "2020-05-28 18:34:43",
+							"type": "text"
+						},
+						{
+							"key": "updated",
+							"value": "2020-05-28 18:34:43",
+							"type": "text"
+						},
+						{
+							"key": "diagnosis_date",
+							"value": "2020-05-28 18:34:43",
+							"type": "text"
+						},
+						{
+							"key": "recovery_date",
+							"value": "2020-05-28 18:34:43",
+							"type": "text"
+						},
+						{
+							"key": "analysis_date",
+							"value": "2020-05-28 18:34:43",
+							"type": "text"
+						},
+						{
+							"key": "source_id",
+							"value": "38",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/patients-api/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"patients-api",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

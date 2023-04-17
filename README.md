@@ -18,3 +18,6 @@ curl http://localhost/patients-api -G --data 'name=test&polyclinic_id=2&birthday
 
 Запрос на создание нового пациента через CURL:
 curl -X POST -d 'name=test & birthday=1996-01-01 & polyclinic_id=2 & phone=89109698891' http://localhost/patients-api/create  --header 'Authorization: Bearer YpBGl_EWteH_sAUPHVWTpbgdJDE7mrXy'
+
+Ссылка на коллекцию Postman:
+https://elements.getpostman.com/redirect?entityId=16121644-da9c9ba0-d5ef-4b6a-9f84-1ccbed1eee01&entityType=collection
